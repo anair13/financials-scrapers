@@ -30,3 +30,4 @@ class Option(scrapy.Item):
     volume_change = scrapy.Field()
     open_interest = scrapy.Field()
     open_interest_change = scrapy.Field()
+    url = scrapy.Field()

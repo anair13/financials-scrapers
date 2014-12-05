@@ -4,6 +4,7 @@ from scrapy.shell import inspect_response
 from finviz.items import Option
 
 path = '//*[@id="mediaquotesoptions"]/div[2]/div/div/div/div/table//tr'
+PREFIX = "http://finance.yahoo.com"
 
 class FinvizspiderSpider(scrapy.Spider):
     name = "YahooSpider"
@@ -25,5 +26,6 @@ class FinvizspiderSpider(scrapy.Spider):
             o['volume_change'] = info[6]
             o['open_interest'] = info[7]
             o['open_interest_change'] = info[8]
+            o['url'] = PREFIX + row.xpath('//td[@class="stk"]/a/@href').extract()[0]
             yield o
         
