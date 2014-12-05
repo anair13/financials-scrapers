@@ -19,3 +19,14 @@ class Stock(scrapy.Item):
     price = scrapy.Field()
     change = scrapy.Field()
     volume = scrapy.Field()
+
+class Option(scrapy.Item):
+    ticker = scrapy.Field()
+    symbol = scrapy.Field()
+    option = scrapy.Field()
+    close = scrapy.Field()
+    change = scrapy.Field()
+    volume = scrapy.Field()
+    volume_change = scrapy.Field()
+    open_interest = scrapy.Field()
+    open_interest_change = scrapy.Field()
