@@ -13,5 +13,9 @@ BOT_NAME = 'finviz'
 SPIDER_MODULES = ['finviz.spiders']
 NEWSPIDER_MODULE = 'finviz.spiders'
 
+ITEM_PIPELINES = {
+    'finviz.pipelines.YahooExportPipeline': 100,
+}
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'finviz (+http://www.yourdomain.com)'

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from scrapy.http.request import Request
 from scrapy.shell import inspect_response
-from finviz.items import YahooSummary
+from finviz.items import YahooSummary, YahooKeyStats
 import MySQLdb
 import re
 from unicodedata import normalize
@@ -41,10 +42,12 @@ class YahooGeneralSpider(scrapy.Spider):
     start_urls = [PREFIX + "/q?s=" + ticker for ticker in names]
 
     def parse(self, response):
+        """Parse the summary page"""
         # inspect_response(response)
         data = response.xpath('//*[@id="yfi_quote_summary_data"]/table/tr')
         y = YahooSummary()
         y['ticker'] = response.request.url[len(PREFIX + "/q?s="):]
+        yield Request(PREFIX + "/q/ks?s=" + y['ticker'] + "+Key+Statistics", callback=self.parse_key_stats)
         labels = []
         values = []
         for row in data:
@@ -53,3 +56,18 @@ class YahooGeneralSpider(scrapy.Spider):
         for l, v in zip(labels, values):
             y[slugify(l)] = v
         yield(y)
+
+    def parse_key_stats(self, response):
+        label_data = response.xpath('//*[@class="yfnc_tablehead1"]')
+        value_data = response.xpath('//*[@class="yfnc_tabledata1"]')
+        y = YahooKeyStats()
+        y['ticker'] = response.request.url[len(PREFIX + "/q/ks?s="):-len("+Key+Statistics")]
+        labels = []
+        values = []
+        for row in label_data:
+            labels.append(slugify(' '.join(row.xpath('.//text()').extract())))
+        for row in value_data:
+            values.append(' '.join(row.xpath('.//text()').extract()))
+        for l, v in zip(labels, values):
+            y[l] = v
+        yield y
