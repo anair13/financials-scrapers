@@ -2,12 +2,13 @@
 import scrapy
 from scrapy.shell import inspect_response
 from finviz.items import Option
+import MySQLdb
 
 path = '//*[@id="mediaquotesoptions"]/div[2]/div/div/div/div/table//tr'
 PREFIX = "http://finance.yahoo.com"
 
-class FinvizspiderSpider(scrapy.Spider):
-    name = "YahooSpider"
+class YahooOptionsSpider(scrapy.Spider):
+    name = "YahooOptionsSpider"
     allowed_domains = ["yahoo.com"]
     start_urls = ["http://finance.yahoo.com/options/lists/?mod_id=mediaquotesoptions&tab=tab" 
         + str(i) + "&rcnt=100&page=" + str(j) for i in range(1,7) for j in range(1,3)]
