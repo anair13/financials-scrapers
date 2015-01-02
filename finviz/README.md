@@ -8,8 +8,7 @@ YahooOptionsSpider reads statistics from Yahoo most active options. Run:
 scrapy crawl YahooOptionsSpider -o yahoo_options.csv
 ```
 
-YahooGeneralSpider reads Yahoo summary and key statistics for every ticker. 
-Results are stored in `yahoo_summary.csv` and `yahoo_keystat.csv`. Run: 
+YahooGeneralSpider reads Yahoo summary and key statistics for every ticker. Run:
 ```sh
-scrapy crawl YahooGeneralSpider
+scrapy crawl YahooGeneralSpider -o yahoo_general.csv
 ```

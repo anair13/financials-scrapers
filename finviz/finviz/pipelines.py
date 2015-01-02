@@ -8,7 +8,7 @@
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
 from scrapy.contrib.exporter import CsvItemExporter
-from finviz.items import YahooSummary, YahooKeyStats
+from finviz.items import YahooSummary
 
 
 class FinvizPipeline(object):
@@ -17,7 +17,7 @@ class FinvizPipeline(object):
 
 
 class YahooExportPipeline(object):
-
+    """Deactivated"""
     def __init__(self):
         self.keystat_file = open('yahoo_keystat.csv', 'w+b')
         self.summary_file = open('yahoo_summary.csv', 'w+b')
